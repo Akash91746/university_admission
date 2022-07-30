@@ -20,6 +20,10 @@ const CourseComp = ({ data, onClickDelete, onClickEdit }) => {
                 <Typography>
                     End Date - {data.endDate.toDateString()}
                 </Typography>
+
+                <Typography>
+                    Fees - {data.fees}
+                </Typography>
             </Box>
         </CardContent>
 

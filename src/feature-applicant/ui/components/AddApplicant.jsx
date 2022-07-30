@@ -46,7 +46,10 @@ const AddApplicant = ({ onClickCancel, editItem }) => {
                     name: editItem.item.name,
                     phoneNumber: editItem.item.phoneNumber,
                     degree: editItem.item.degree,
-                    percent: editItem.item.percent
+                    percent: editItem.item.percent,
+                    password: editItem.item.password,
+                    status: editItem.item.status,
+                    course: editItem.item.course
                 } : initialValues}
                 onSubmit={handleOnSubmit}
                 validationSchema={Yup.object().shape({

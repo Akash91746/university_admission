@@ -1,7 +1,7 @@
 import { Box, Button, Card, CardContent, CardHeader, Divider, Typography } from "@mui/material";
 import { DeleteForeverOutlined, EditOutlined } from '@mui/icons-material';
 
-const Applicant = ({ data,onClickEdit,onClickDelete }) => {
+const Applicant = ({ data, onClickEdit, onClickDelete }) => {
     return <Card>
 
         <CardHeader title={data.name} />
@@ -19,6 +19,14 @@ const Applicant = ({ data,onClickEdit,onClickDelete }) => {
 
             <Typography>
                 Percent: {data.percent}
+            </Typography>
+
+            <Typography>
+                Course: {data.course}
+            </Typography>
+
+            <Typography>
+                Status: {data.status}
             </Typography>
 
         </CardContent>
