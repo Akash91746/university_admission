@@ -14,11 +14,15 @@ const formValidation = Yup.object().shape({
         .min(0, 'Enter percent range from 0% - 100%')
         .max(100, 'Enter percent range from 0% - 100%')
         .required("Required *"),
-    course: Yup.string()
+    courseId: Yup.number()
         .required("Required * "),
     password: Yup.string()
         .required("Required *")
-        .min(8, "Minimum 8 characters required")
+        .min(8, "Minimum 8 characters required"),
+    status: Yup.string()
+        .required("Required *"),
+    admissionDate: Yup.string()
+        .required("Required *")
 });
 
 export default formValidation;

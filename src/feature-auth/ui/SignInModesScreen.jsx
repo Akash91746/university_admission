@@ -5,6 +5,7 @@ import { Box } from '@mui/material';
 import NavBar from "../../common/components/navBar/NavBar";
 import SignInModes from "./components/SignInModes";
 import background from '../../styles/raw/auth_bg.jpg';
+import Footer from '../../common/components/Footer';
 
 const SignInModesScreen = () => {
 
@@ -26,6 +27,8 @@ const SignInModesScreen = () => {
                 <SignInModes />
             </Container>
         </main>
+
+        <Footer />
     </React.Fragment>
 }
 

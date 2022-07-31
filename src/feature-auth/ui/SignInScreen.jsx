@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Container from "@mui/material/Container";
-import { Card, CardContent, CardHeader, Divider, Typography,Box } from "@mui/material";
+import { Card, CardContent, CardHeader, Divider, Typography, Box } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 
@@ -8,6 +8,7 @@ import NavBar from "../../common/components/navBar/NavBar";
 import SignInForm from "./components/SignInForm";
 import signInModes from "../domain/utils/SignInModes";
 import background from '../../styles/raw/auth_bg.jpg';
+import Footer from "../../common/components/Footer";
 
 const SignInScreen = () => {
 
@@ -54,6 +55,7 @@ const SignInScreen = () => {
                 </Card>
             </Container>
         </main>
+        <Footer />
     </React.Fragment>
 }
 

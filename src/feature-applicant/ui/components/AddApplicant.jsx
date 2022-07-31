@@ -1,5 +1,5 @@
 import React from "react";
-import { DialogContent, DialogTitle, Divider, Button } from "@mui/material";
+import { DialogContent, DialogTitle, Divider, Button, Typography } from "@mui/material";
 import { Field, Formik, Form } from "formik";
 import { TextField } from "formik-mui";
 import * as Yup from 'yup';
@@ -9,15 +9,17 @@ import SpaceBetweenBox from "../../../common/components/SpaceBetweenBox";
 import { useDispatch } from "react-redux";
 import { ApplicantsAction } from "../../../store/applicant-slice";
 import formValidation from "../../domain/utils/formValidation";
+import DatePickerField from "../../../common/components/DatePickerField";
 
 const initialValues = {
     name: '',
     phoneNumber: '',
     degree: "",
     percent: '',
-    course: "",
+    courseId: "",
     password: '',
-    status: ''
+    status: '',
+    admissionDate: ""
 }
 
 const AddApplicant = ({ onClickCancel, editItem }) => {
@@ -94,13 +96,26 @@ const AddApplicant = ({ onClickCancel, editItem }) => {
                         />
 
                         <Field
-                            name='course'
-                            label="Course"
+                            name='courseId'
+                            label="Course Id"
                             required
                             fullWidth
                             component={TextField}
                             sx={{ mt: 2 }}
                         />
+
+                        <SpaceBetweenBox mt={2}>
+
+                            <Typography>
+                                Start Date :
+                            </Typography>
+
+                            <DatePickerField
+                                name='courseStartDate'
+                                value={values.courseStartDate}
+                                onChange={setFieldValue}
+                            />
+                        </SpaceBetweenBox>
 
                         <Field
                             name="password"
@@ -129,7 +144,7 @@ const AddApplicant = ({ onClickCancel, editItem }) => {
                                 Cancel
                             </Button>
 
-                            <Button variant='contained' type='submit'>
+                            <Button variant='contained' type='submit' color='secondary'>
                                 {
                                     editItem ? "Update" : "Add"
                                 }

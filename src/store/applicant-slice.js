@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import Repository from "../feature-applicant/data/repository/Repository";
 
 const applicantSlice = createSlice({
     name: 'applicant',
@@ -22,10 +23,20 @@ const applicantSlice = createSlice({
     }
 });
 
+const repo = new Repository();
+
 export const initializeApplicants = createAsyncThunk(
     '/initializeApplicants',
     async () => {
-        
+
+    }
+);
+
+export const addApplicant = createAsyncThunk(
+    '/addApplicant',
+    async (applicant) => {
+        const result = repo.addApplicant(applicant);
+        return result;
     }
 )
 
