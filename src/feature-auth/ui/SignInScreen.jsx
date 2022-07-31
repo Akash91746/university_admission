@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import Container from "@mui/material/Container";
-import { Card, CardContent, CardHeader, Divider, Typography } from "@mui/material";
+import { Card, CardContent, CardHeader, Divider, Typography,Box } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 
 import NavBar from "../../common/components/navBar/NavBar";
 import SignInForm from "./components/SignInForm";
 import signInModes from "../domain/utils/SignInModes";
+import background from '../../styles/raw/auth_bg.jpg';
 
 const SignInScreen = () => {
 
@@ -26,9 +27,15 @@ const SignInScreen = () => {
 
     }, [mode]);
 
-
-
     return <React.Fragment>
+
+        <Box
+            position='absolute'
+            width='100%'
+            height='100%'
+            zIndex={-1}
+            sx={{ backgroundImage: `url(${background})`, backgroundSize: 'cover', opacity: '0.8' }}
+        />
         <header>
             <NavBar />
         </header>

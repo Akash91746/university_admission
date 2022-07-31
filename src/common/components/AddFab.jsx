@@ -6,7 +6,7 @@ const AddFab = ({ onClick, text, ...others }) => {
         onClick={onClick}
         variant='extended'
         color='secondary'
-        sx={{ position: 'fixed', bottom: 0, mb: 2 }}
+        sx={{ position: 'fixed', bottom: 0, mb: 8 }}
         {...others}
     >
         <AddOutlined sx={{ mr: 2 }} /> {text}

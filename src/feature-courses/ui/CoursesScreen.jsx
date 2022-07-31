@@ -6,6 +6,7 @@ import NavBar from "../../common/components/navBar/NavBar";
 import AddNewCourse from "./components/AddNewCourse";
 import Courses from "./Courses";
 import background from '../../styles/raw/course_bg_1.jpg';
+import Footer from "../../common/components/Footer";
 
 const CoursesScreen = () => {
 
@@ -72,7 +73,7 @@ const CoursesScreen = () => {
 
                 <Fab color="secondary"
                     variant='extended'
-                    sx={{ position: 'fixed', bottom: 0, mb: 2 }}
+                    sx={{ position: 'fixed', bottom: 0, mb: 8 }}
                     onClick={handleOpenNewCourse}
                 >
                     <AddOutlined sx={{ mr: 2 }} /> Add Course
@@ -80,6 +81,8 @@ const CoursesScreen = () => {
 
             </Container>
         </main>
+
+        <Footer />
     </React.Fragment>
 }
 

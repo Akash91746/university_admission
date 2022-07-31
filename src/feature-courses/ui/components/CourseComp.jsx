@@ -37,7 +37,7 @@ const CourseComp = ({ data, onClickDelete, onClickEdit }) => {
                 variant='outlined'
                 onClick={onClickEdit}
             >
-                Edit
+                Update
             </Button>
             <Button
                 sx={{ ml: 1 }}

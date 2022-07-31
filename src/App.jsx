@@ -14,6 +14,8 @@ import StaffMemberScreen from './feature-staffMember/ui/StaffMemberScreen';
 import AddmissionScreen from './feature-admission/ui/AdmissionScreen';
 import AdmissionCommitteeScreen from './feature-admissionCommittee/ui/AdmissionCommitteeScreen';
 import RequireAuth from './common/components/RequireAuth';
+import AboutUsScreen from './feature-aboutUs/AboutUsScreen';
+import ContactUsScreen from './feature-contact-us/ContactUsScreen';
 
 function App() {
 
@@ -50,7 +52,7 @@ function App() {
               </RequireAuth>
             } />
 
-          <Route path='/staff-member' element={
+          <Route path='/staff-members' element={
             <RequireAuth>
               <StaffMemberScreen />
             </RequireAuth>
@@ -69,6 +71,9 @@ function App() {
             </RequireAuth>
           } />
 
+          <Route path='/about-us' element={<AboutUsScreen />} />
+
+          <Route path='/contact-us' element={<ContactUsScreen />} />
         </Routes>
       </BrowserRouter>
 

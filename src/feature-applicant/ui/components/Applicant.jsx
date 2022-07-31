@@ -37,7 +37,7 @@ const Applicant = ({ data, onClickEdit, onClickDelete }) => {
                 variant='outlined'
                 onClick={onClickEdit}
             >
-                Edit
+                Update
             </Button>
             <Button
                 sx={{ ml: 1 }}

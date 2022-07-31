@@ -1,11 +1,13 @@
-import { Box, Card, CardHeader, Container } from "@mui/material";
+import { AppBar, Box, Card, CardHeader, Container, Toolbar, Typography } from "@mui/material";
 import React from "react";
 
-import { Link } from 'react-router-dom';
+import Footer from "../../common/components/Footer";
 import NavBar from "../../common/components/navBar/NavBar";
-import background from '../../styles/raw/home_page_bg.jpg';
+import background from '../../styles/raw/university_img.png';
 
 const HomeScreen = () => {
+
+
     return <React.Fragment>
 
         <Box
@@ -20,38 +22,20 @@ const HomeScreen = () => {
             <NavBar />
         </header>
         <main>
-            <Container sx={{ mt: 2 }}>
-                <Link to="/courses">
-                    <Card>
-                        <CardHeader title='Courses' />
-                    </Card>
-                </Link>
+            <Container sx={{ mt: 2 }} maxWidth='xl'>
 
-                <Link to={'/applicants'}>
-                    <Card sx={{ mt: 2 }}>
-                        <CardHeader title="Applicants" />
-                    </Card>
-                </Link>
+                <Box width='100%' mt={32} display='flex' justifyContent='center'>
 
-                <Link to={'/staff-member'}>
-                    <Card sx={{ mt: 2 }}>
-                        <CardHeader title='Staff Member' />
-                    </Card>
-                </Link>
+                    <Typography width='80%' textAlign='center' color='white' variant='h2'>
+                        University life will give you much more than just a degree - get ready for all the adventures
+                    </Typography>
+                </Box>
 
-                <Link to={'/admissions'}>
-                    <Card sx={{ mt: 2 }}>
-                        <CardHeader title='Admissions' />
-                    </Card>
-                </Link>
-
-                <Link to={'/admission-committee'}>
-                    <Card sx={{ mt: 2 }}>
-                        <CardHeader title='Admission Committee' />
-                    </Card>
-                </Link>
             </Container>
         </main>
+
+        <Footer />
+
     </React.Fragment>;
 }
 

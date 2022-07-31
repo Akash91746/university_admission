@@ -8,7 +8,7 @@ const EditDeleteButtons = ({ onClickEdit, onClickDelete, ...others }) => {
             variant='outlined'
             onClick={onClickEdit}
         >
-            Edit
+            Update
         </Button>
         <Button
             sx={{ ml: 1 }}

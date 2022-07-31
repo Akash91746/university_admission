@@ -7,6 +7,7 @@ import Applicants from "./Applicants";
 import AddApplicant from "./components/AddApplicant";
 import background from '../../styles/raw/applicants_bg.jpg';
 import useOpenEdit from "../../hooks/useOpenEdit";
+import Footer from "../../common/components/Footer";
 
 const ApplicantScreen = () => {
 
@@ -49,13 +50,15 @@ const ApplicantScreen = () => {
                 <Fab
                     color="secondary"
                     variant='extended'
-                    sx={{ position: 'fixed', bottom: 0, mb: 2 }}
+                    sx={{ position: 'fixed', bottom: 0, mb: 8 }}
                     onClick={handleOpen}
                 >
                     <AddOutlined sx={{ mr: 2 }} /> Add Applicant
                 </Fab>
             </Container>
         </main>
+
+        <Footer />
     </React.Fragment>
 }
 
