@@ -1,26 +1,89 @@
 import './App.css';
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Snackbar, Alert } from '@mui/material';
+
+import useSnackBar from './hooks/useSnackBar';
 
 import HomeScreen from './feature-home/ui/HomeScreen.jsx';
 import SignInScreen from './feature-auth/ui/SignInScreen';
 import SignInModesScreen from './feature-auth/ui/SignInModesScreen';
-import SignUpScreen from './feature-auth/ui/SignUpScreen';
 import CoursesScreen from './feature-courses/ui/CoursesScreen';
 import ApplicantScreen from './feature-applicant/ui/ApplicantScreen';
+import StaffMemberScreen from './feature-staffMember/ui/StaffMemberScreen';
+import AddmissionScreen from './feature-admission/ui/AdmissionScreen';
+import AdmissionCommitteeScreen from './feature-admissionCommittee/ui/AdmissionCommitteeScreen';
+import RequireAuth from './common/components/RequireAuth';
 
 function App() {
+
+  const { isVisible, handleCloseSnackbar, message, severity } = useSnackBar();
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<HomeScreen />} />
-        <Route path='/sign-in' element={<SignInModesScreen />} />
-        <Route path='/sign-in/:mode' element={<SignInScreen />} />
-        <Route path='/sign-up' element={<SignUpScreen />} />
-        <Route path='/courses' element={<CoursesScreen />} />
-        <Route path='/applicants' element={<ApplicantScreen />} />
-      </Routes>
-    </BrowserRouter>
+    <React.Fragment>
+
+
+      <BrowserRouter>
+        <Routes>
+
+          <Route path='/'
+            element={
+              <RequireAuth>
+                <HomeScreen />
+              </RequireAuth>
+            } />
+
+          <Route path='/sign-in' element={<SignInModesScreen />} />
+          <Route path='/sign-in/:mode' element={<SignInScreen />} />
+          {/* <Route path='/sign-up' element={<SignUpScreen />} /> */}
+          <Route path='/courses' element={
+            <RequireAuth>
+
+              <CoursesScreen />
+            </RequireAuth>
+          } />
+
+          <Route path='/applicants'
+            element={
+              <RequireAuth>
+                <ApplicantScreen />
+              </RequireAuth>
+            } />
+
+          <Route path='/staff-member' element={
+            <RequireAuth>
+              <StaffMemberScreen />
+            </RequireAuth>
+          } />
+
+          <Route path='/admissions' element={
+            <RequireAuth>
+
+              <AddmissionScreen />
+            </RequireAuth>
+          } />
+
+          <Route path='/admission-committee' element={
+            <RequireAuth>
+              <AdmissionCommitteeScreen />
+            </RequireAuth>
+          } />
+
+        </Routes>
+      </BrowserRouter>
+
+      <Snackbar open={isVisible}
+        onClose={handleCloseSnackbar}
+        autoHideDuration={4000}
+      >
+        <Alert severity={severity}
+          onClose={handleCloseSnackbar}
+          sx={{ width: '100%' }}>
+          {message}
+        </Alert>
+      </Snackbar>
+
+    </React.Fragment>
   );
 }
 

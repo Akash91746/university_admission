@@ -2,12 +2,21 @@ import React from "react";
 import { AppBar, Box, Container, Toolbar, Typography, Button, CssBaseline } from "@mui/material";
 
 import SpaceBetweenBox from "../SpaceBetweenBox";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from "react-redux";
+import { AuthActions } from "../../../store/auth-slice";
 
 const NavBar = () => {
+    const { isLoggedIn } = useSelector(store => store.auth);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const handleOnClickSignIn = () => {
-
+    const handleOnClickSignIn =  () => {
+        if (isLoggedIn) {
+            dispatch(AuthActions.signOut());
+        } else {
+            navigate('/sign-in');
+        }
     }
 
     return <React.Fragment>
@@ -26,16 +35,17 @@ const NavBar = () => {
                                 </Typography>
                             </Link>
 
-                            <Link to="/sign-in">
 
-                                <Button
-                                    variant='text'
-                                    color='inherit'
-                                    onClick={handleOnClickSignIn}
-                                >
-                                    Sign In
-                                </Button>
-                            </Link>
+                            <Button
+                                variant='text'
+                                color='inherit'
+                                onClick={handleOnClickSignIn}
+                            >
+                                {
+                                    isLoggedIn ? "Sign Out" : "Sign In"
+                                }
+                            </Button>
+
                         </SpaceBetweenBox>
                     </Toolbar>
                 </Container>

@@ -1,15 +1,19 @@
 import { Grid } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux/es/exports";
-import { CourseActions } from "../../store/courses-slice";
+import { deleteCourse, initializeCourses } from "../../store/courses-slice";
 import CourseComp from "./components/CourseComp";
 
 const Courses = ({ onClickEdit, ...others }) => {
     const { courses } = useSelector(store => store.courses);
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        dispatch(initializeCourses());
+    }, []);
+
     const handleOnClickDelete = (data, index) => {
-        dispatch(CourseActions.delete(index));
+        dispatch(deleteCourse({ courseId: data.courseId, index }));
     }
 
     const handleOnEdit = (data, index) => {
@@ -22,7 +26,7 @@ const Courses = ({ onClickEdit, ...others }) => {
                 courses.map((data, index) => (
                     <Grid item
                         md={3} xl={3} lg={3}
-                        key={`${data.title}_${data.startDate.toDateString()}`}
+                        key={`${data.courseId}`}
                     >
                         <CourseComp
                             data={data}

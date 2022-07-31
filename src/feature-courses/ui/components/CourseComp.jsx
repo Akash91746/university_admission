@@ -6,7 +6,7 @@ import { DeleteForeverOutlined, EditOutlined } from '@mui/icons-material';
 const CourseComp = ({ data, onClickDelete, onClickEdit }) => {
 
     return <Card>
-        <CardHeader title={data.title} />
+        <CardHeader title={data.courseName} />
 
         <Divider />
 
@@ -14,21 +14,24 @@ const CourseComp = ({ data, onClickDelete, onClickEdit }) => {
 
             <Box mt={2}>
                 <Typography>
-                    Start Date - {data.startDate.toDateString()}
+                    Start Date - {data.courseStartDate}
                 </Typography>
 
                 <Typography>
-                    End Date - {data.endDate.toDateString()}
+                    End Date - {data.courseEndDate}
                 </Typography>
 
                 <Typography>
-                    Fees - {data.fees}
+                    Duration - {data.courseDuration}
+                </Typography>
+                <Typography>
+                    Fees - {data.courseFees}
                 </Typography>
             </Box>
         </CardContent>
 
 
-        <Box mb={2} ml={2}>
+        <Box mb={2} ml={2} mr={2}>
             <Button
                 startIcon={<EditOutlined />}
                 variant='outlined'
@@ -42,6 +45,7 @@ const CourseComp = ({ data, onClickDelete, onClickEdit }) => {
                 variant='contained'
                 color='warning'
                 onClick={onClickDelete}
+
             >
                 Delete
             </Button>

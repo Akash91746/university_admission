@@ -1,4 +1,4 @@
-import { Container, Dialog, Fab,Box } from "@mui/material";
+import { Container, Dialog, Fab, Box } from "@mui/material";
 import React, { useState } from "react";
 import AddOutlined from '@mui/icons-material/AddOutlined';
 
@@ -6,29 +6,11 @@ import NavBar from '../../common/components/navBar/NavBar';
 import Applicants from "./Applicants";
 import AddApplicant from "./components/AddApplicant";
 import background from '../../styles/raw/applicants_bg.jpg';
+import useOpenEdit from "../../hooks/useOpenEdit";
 
 const ApplicantScreen = () => {
 
-    const [open, setOpen] = useState(false);
-    const [editItem, setEditItem] = useState(undefined);
-
-    const handleOpen = () => {
-        setOpen(value => {
-            const val = !value;
-            if (!val) {
-                setEditItem(undefined);
-            }
-            return val;
-        });
-    }
-
-    const handleEditItem = (item, index) => {
-        setEditItem({
-            item: item,
-            index: index
-        });
-        handleOpen();
-    }
+    const { open, handleOpen, handleEditItem, editItem } = useOpenEdit();
 
     return <React.Fragment>
 

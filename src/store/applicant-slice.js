@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const applicantSlice = createSlice({
     name: 'applicant',
@@ -21,6 +21,13 @@ const applicantSlice = createSlice({
         }
     }
 });
+
+export const initializeApplicants = createAsyncThunk(
+    '/initializeApplicants',
+    async () => {
+        
+    }
+)
 
 export const ApplicantsAction = applicantSlice.actions;
 export default applicantSlice;

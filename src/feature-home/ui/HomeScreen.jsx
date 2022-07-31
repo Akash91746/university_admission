@@ -32,6 +32,24 @@ const HomeScreen = () => {
                         <CardHeader title="Applicants" />
                     </Card>
                 </Link>
+
+                <Link to={'/staff-member'}>
+                    <Card sx={{ mt: 2 }}>
+                        <CardHeader title='Staff Member' />
+                    </Card>
+                </Link>
+
+                <Link to={'/admissions'}>
+                    <Card sx={{ mt: 2 }}>
+                        <CardHeader title='Admissions' />
+                    </Card>
+                </Link>
+
+                <Link to={'/admission-committee'}>
+                    <Card sx={{ mt: 2 }}>
+                        <CardHeader title='Admission Committee' />
+                    </Card>
+                </Link>
             </Container>
         </main>
     </React.Fragment>;

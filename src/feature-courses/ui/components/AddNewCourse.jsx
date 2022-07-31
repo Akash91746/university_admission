@@ -4,62 +4,44 @@ import { Button, Typography } from '@mui/material';
 import { Formik, Field, Form } from 'formik';
 import { TextField } from "formik-mui";
 import SpaceBetweenBox from "../../../common/components/SpaceBetweenBox";
-import DatePickerField from "./DatePickerField";
+import DatePickerField from "../../../common/components/DatePickerField";
 import { useDispatch } from "react-redux";
-import { CourseActions } from "../../../store/courses-slice";
-import * as Yup from 'yup';
+import { addCourse, CourseActions, updateCourse } from "../../../store/courses-slice";
+import formValidation from "../../domain/utils/formValidation";
 
 const initialValues = {
-    title: '',
-    duration: '',
-    startDate: '',
-    endDate: '',
-    fees: ''
+    courseName: '',
+    courseDuration: '',
+    courseStartDate: '',
+    courseEndDate: '',
+    courseFees: ''
 }
 
-const AddNewCourse = ({ editItem, editItemIndex, handleOnClickCancel }) => {
+const AddNewCourse = ({ editItem, handleOnClickCancel }) => {
 
     const dispatch = useDispatch();
 
     const handleOnSubmit = (values) => {
         if (editItem) {
-            dispatch(CourseActions.update({ item: values, index: editItem.index }));
+            dispatch(updateCourse({ course: values, index: editItem.index }));
         } else {
-            dispatch(CourseActions.add(values));
+            dispatch(addCourse(values));
         }
         handleOnClickCancel();
     }
 
     return <React.Fragment>
         <Formik
-            initialValues={editItem ? {
-                title: editItem.item.title,
-                startDate: editItem.item.startDate,
-                endDate: editItem.item.endDate,
-                duration: '',
-                fees: editItem.item.fees
-            } : initialValues}
+            initialValues={editItem ? editItem.item : initialValues}
             onSubmit={handleOnSubmit}
-            validationSchema={Yup.object().shape({
-                title: Yup.string()
-                    .min(2, 'Min 2 characters long')
-                    .required('Required *'),
-                startDate: Yup.string()
-                    .required("Required *"),
-                endDate: Yup.string()
-                    .required("Required *"),
-                fees: Yup.number()
-                    .typeError("Please enter valid input")
-                    .min(0, "Please enter valid input")
-                    .required("Required *")
-            })}
+            validationSchema={formValidation}
         >
             {({ values, setFieldValue }) => (
                 <Form>
 
                     <Field
-                        name='title'
-                        label='Title'
+                        name='courseName'
+                        label='Name'
                         component={TextField}
                         fullWidth
                         required
@@ -72,8 +54,8 @@ const AddNewCourse = ({ editItem, editItemIndex, handleOnClickCancel }) => {
                         </Typography>
 
                         <DatePickerField
-                            name='startDate'
-                            value={values.startDate}
+                            name='courseStartDate'
+                            value={values.courseStartDate}
                             onChange={setFieldValue}
                         />
                     </SpaceBetweenBox>
@@ -84,14 +66,23 @@ const AddNewCourse = ({ editItem, editItemIndex, handleOnClickCancel }) => {
                         </Typography>
 
                         <DatePickerField
-                            name='endDate'
-                            value={values.endDate}
+                            name='courseEndDate'
+                            value={values.courseEndDate}
                             onChange={setFieldValue}
                         />
                     </SpaceBetweenBox>
 
                     <Field
-                        name='fees'
+                        name='courseDuration'
+                        label='Duration'
+                        component={TextField}
+                        fullWidth
+                        required
+                        sx={{ mt: 2 }}
+                    />
+
+                    <Field
+                        name='courseFees'
                         label='Fees'
                         component={TextField}
                         fullWidth

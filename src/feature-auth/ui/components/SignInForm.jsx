@@ -1,12 +1,16 @@
 import React from "react";
 
 import { Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from "formik";
 import { TextField } from 'formik-mui';
 
 import SpaceBetweenBox from "../../../common/components/SpaceBetweenBox";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../../store/auth-slice";
+
+import LoadingButton from '../../../common/components/LoadingButton';
 
 const initialValues = {
     id: '',
@@ -15,17 +19,31 @@ const initialValues = {
 
 const SignInForm = ({ mode }) => {
 
-    const idLabel = mode + ' id';
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
+    const idLabel = mode + ' id';
     const capitalized = idLabel.charAt(0).toUpperCase() + idLabel.slice(1);
+
+    const handleOnSubmit = async (values, actions) => {
+
+        const { result } = await dispatch(loginUser({
+            loginMode: mode,
+            id: values.id,
+            password: values.password
+        })).unwrap();
+
+        if (result.isSuccess) {
+            navigate('/');
+        }
+    }
 
     return <React.Fragment>
         <Formik
             initialValues={initialValues}
-            onSubmit={() => { }}
+            onSubmit={handleOnSubmit}
             validationSchema={Yup.object().shape({
                 id: Yup.string()
-                    .min(4, 'Please enter a valid id')
                     .required('Required *'),
                 password: Yup.string()
                     .min(8, "Minimum 8 characters required")
@@ -56,17 +74,19 @@ const SignInForm = ({ mode }) => {
                         required
                     />
 
-                    <Button
+
+                    <LoadingButton
                         variant="contained"
                         color="secondary"
                         fullWidth
-                        disabled={isSubmitting}
                         type='submit'
+                        sx={{ mb: 4 }}
+                        loading={isSubmitting}
                     >
                         Sign In
-                    </Button>
+                    </LoadingButton>
 
-                    <SpaceBetweenBox mt={2} mb={1} >
+                    {/* <SpaceBetweenBox mt={2} mb={1} >
 
                         <Button
                             variant="text"
@@ -85,7 +105,7 @@ const SignInForm = ({ mode }) => {
                             </Button>
                         </Link>
 
-                    </SpaceBetweenBox>
+                    </SpaceBetweenBox> */}
 
                 </Form>
             )}
