@@ -34,9 +34,9 @@ class DataSource {
         }
     }
 
-    async delete(url) {
+    async delete(url, data) {
         try {
-            const result = await axios.delete(url);
+            const result = await axios.delete(url, { data: data });
 
             return {
                 isSuccess: true,

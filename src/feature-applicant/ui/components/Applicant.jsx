@@ -3,30 +3,17 @@ import { DeleteForeverOutlined, EditOutlined } from '@mui/icons-material';
 
 const Applicant = ({ data, onClickEdit, onClickDelete }) => {
     return <Card>
-
-        <CardHeader title={data.name} />
-
-        <Divider />
-
         <CardContent>
             <Typography>
-                Phone number: {data.phoneNumber}
+               Applicant Id: {data.applicantId}
             </Typography>
 
             <Typography>
-                Degree: {data.degree}
+                Applicant Name: {data.applicantName}
             </Typography>
 
             <Typography>
-                Percent: {data.percent}
-            </Typography>
-
-            <Typography>
-                Course: {data.course}
-            </Typography>
-
-            <Typography>
-                Status: {data.status}
+                status: {data.status}
             </Typography>
 
         </CardContent>
@@ -40,7 +27,7 @@ const Applicant = ({ data, onClickEdit, onClickDelete }) => {
                 Update
             </Button>
             <Button
-                sx={{ ml: 1 }}
+                sx={{ ml: 1, mr: 2 }}
                 startIcon={<DeleteForeverOutlined />}
                 variant='contained'
                 color='warning'

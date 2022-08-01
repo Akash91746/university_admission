@@ -1,12 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    showAuthUi: false,
-    snackbar: {
-        isVisible: false,
-        message: '',
-        severity: undefined
-    }
+    isVisible: false,
+    message: '',
+    severity: undefined
 }
 
 export const severity = {
@@ -20,14 +17,14 @@ const uiSlice = createSlice({
     name: 'uiSlice',
     initialState: { initialState },
     reducers: {
-        showSnackBar({ snackbar }, action) {
+        showSnackBar(state, action) {
             const { message, severity } = action.payload;
-            snackbar.isVisible = true;
-            snackbar.message = message;
-            snackbar.severity = severity;
+            state.isVisible = true;
+            state.message = message;
+            state.severity = severity;
         },
-        hideSnackBar({ snackbar }) {
-            snackbar.isVisible = false;
+        hideSnackBar(state) {
+            state.isVisible = false;
         },
     }
 });

@@ -11,6 +11,8 @@ import { useDispatch } from "react-redux";
 import { loginUser } from "../../../store/auth-slice";
 
 import LoadingButton from '../../../common/components/LoadingButton';
+import useSnackbar from "../../../hooks/useSnackBar";
+import { severity } from "../../../store/ui-slice";
 
 const initialValues = {
     id: '',
@@ -21,6 +23,7 @@ const SignInForm = ({ mode }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { handleOpenSnackbar } = useSnackbar();
 
     const idLabel = mode + ' id';
     const capitalized = idLabel.charAt(0).toUpperCase() + idLabel.slice(1);
@@ -35,6 +38,9 @@ const SignInForm = ({ mode }) => {
 
         if (result.isSuccess) {
             navigate('/');
+        } else {
+            const error = result.value;
+            handleOpenSnackbar(error, severity.error);
         }
     }
 

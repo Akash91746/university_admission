@@ -6,7 +6,10 @@ const formValidation = Yup.object().shape({
         .min(8, 'Minimum 8 characters')
         .required(REQUIRED),
     role: Yup.string()
-        .required(REQUIRED)
+        .required(REQUIRED),
+    confirmPassword: Yup.string()
+        .oneOf([Yup.ref("password"), null], "Password does not match")
+        .required('Required *'),
 });
 
 export default formValidation;

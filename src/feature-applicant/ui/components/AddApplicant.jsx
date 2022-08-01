@@ -2,40 +2,66 @@ import React from "react";
 import { DialogContent, DialogTitle, Divider, Button, Typography } from "@mui/material";
 import { Field, Formik, Form } from "formik";
 import { TextField } from "formik-mui";
-import * as Yup from 'yup';
 import "yup-phone";
 
 import SpaceBetweenBox from "../../../common/components/SpaceBetweenBox";
 import { useDispatch } from "react-redux";
-import { ApplicantsAction } from "../../../store/applicant-slice";
+import { addApplicant, ApplicantsAction, updateApplicant } from "../../../store/applicant-slice";
 import formValidation from "../../domain/utils/formValidation";
 import DatePickerField from "../../../common/components/DatePickerField";
+import useSnackBar from '../../../hooks/useSnackBar';
+import StatusSelector from "../../../common/components/StatusSelector";
+import { severity } from "../../../store/ui-slice";
 
 const initialValues = {
-    name: '',
-    phoneNumber: '',
-    degree: "",
-    percent: '',
-    courseId: "",
+    applicantName: '',
+    applicantDegree: '',
+    applicantGraduationPercent: '',
+    mobileNumber: "",
     password: '',
     status: '',
-    admissionDate: ""
+    admissionDate: "",
+    applicantId: '',
+    courseId: '',
+    admissionStatus: ''
 }
 
 const AddApplicant = ({ onClickCancel, editItem }) => {
 
     const dispatch = useDispatch();
+    const { handleOpenSnackbar } = useSnackBar();
 
-    const handleOnSubmit = (values) => {
+    const handleOnSubmit = async (values) => {
+        let result;
         if (editItem) {
-            dispatch(ApplicantsAction.update({
-                item: values,
-                index: editItem.index
-            }));
+            const item = {
+                ...values,
+                applicantId: editItem.item.applicantId
+            };
+            result = await dispatch(updateApplicant({ applicant: item, index: editItem.index })).unwrap();
+
+            const isSuccess = result.result.isSuccess;
+
+            if (isSuccess) {
+                handleOpenSnackbar('Successfull', severity.success);
+                onClickCancel();
+            } else {
+                const errorMessage = result.errorMessage;
+                handleOpenSnackbar(errorMessage, severity.error);
+            }
+
         } else {
-            dispatch(ApplicantsAction.add(values));
+            result = await dispatch(addApplicant(values)).unwrap();
+
+            if (result.isSuccess) {
+                handleOpenSnackbar('Successfull', severity.success);
+                onClickCancel();
+            } else {
+                const errorMessage = result.errorMessage;
+                handleOpenSnackbar(errorMessage, severity.error);
+            }
+
         }
-        onClickCancel();
     }
 
     return <React.Fragment>
@@ -46,49 +72,76 @@ const AddApplicant = ({ onClickCancel, editItem }) => {
         <DialogContent>
             <Formik
                 initialValues={editItem ? {
-                    name: editItem.item.name,
-                    phoneNumber: editItem.item.phoneNumber,
-                    degree: editItem.item.degree,
-                    percent: editItem.item.percent,
-                    password: editItem.item.password,
-                    status: editItem.item.status,
-                    course: editItem.item.course
+                    ...initialValues,
+                    applicantName: editItem.item.applicantName,
+                    status: editItem.item.status
                 } : initialValues}
                 onSubmit={handleOnSubmit}
                 validationSchema={formValidation}
             >
-                {({ values, setFieldValue }) => (
+                {({ values, setFieldValue, errors }) => (
                     <Form>
 
                         <Field
-                            name='name'
-                            label='Name'
+                            name='applicantName'
+                            label='Applicant Name'
                             component={TextField}
                             fullWidth
                             required
                         />
 
                         <Field
-                            name='phoneNumber'
-                            label='Phone Number'
+                            name='applicantDegree'
+                            label='Applicant Degree'
+                            component={TextField}
+                            fullWidth
+                            required
+                            sx={{ mt: 2 }}
+                        />
+
+                        <Field
+                            name='applicantGraduationPercent'
+                            label='Applicant Graduation Percent'
+                            component={TextField}
+                            fullWidth
+                            required
+                            sx={{ mt: 2 }}
+                        />
+
+                        <Field
+                            name='mobileNumber'
+                            label='Mobile Number'
                             required
                             fullWidth
                             component={TextField}
                             sx={{ mt: 2 }}
                         />
 
-                        <Field
-                            name='degree'
-                            label='Degree'
-                            required
-                            fullWidth
-                            component={TextField}
-                            sx={{ mt: 2 }}
+                        <StatusSelector
+                            label='Applicant Status'
+                            name='status'
+                            value={values.status}
+                            onChange={setFieldValue}
+                            error={errors.status}
+                            sx={{ mt: 2, width: '100%' }}
                         />
 
+                        <SpaceBetweenBox mt={2}>
+
+                            <Typography>
+                                Admission Date :
+                            </Typography>
+
+                            <DatePickerField
+                                name='admissionDate'
+                                value={values.admissionDate}
+                                onChange={setFieldValue}
+                            />
+                        </SpaceBetweenBox>
+
                         <Field
-                            name='percent'
-                            label='Graduation Percent'
+                            name='applicantId'
+                            label='Applicant Id'
                             required
                             fullWidth
                             component={TextField}
@@ -97,25 +150,21 @@ const AddApplicant = ({ onClickCancel, editItem }) => {
 
                         <Field
                             name='courseId'
-                            label="Course Id"
+                            label='Course Id'
                             required
                             fullWidth
                             component={TextField}
                             sx={{ mt: 2 }}
                         />
 
-                        <SpaceBetweenBox mt={2}>
-
-                            <Typography>
-                                Start Date :
-                            </Typography>
-
-                            <DatePickerField
-                                name='courseStartDate'
-                                value={values.courseStartDate}
-                                onChange={setFieldValue}
-                            />
-                        </SpaceBetweenBox>
+                        <StatusSelector
+                            label='Admission Status'
+                            name='admissionStatus'
+                            value={values.admissionStatus}
+                            onChange={setFieldValue}
+                            error={errors.admissionStatus}
+                            sx={{ mt: 2, width: '100%' }}
+                        />
 
                         <Field
                             name="password"
@@ -127,14 +176,6 @@ const AddApplicant = ({ onClickCancel, editItem }) => {
                             type='password'
                         />
 
-                        <Field
-                            name='status'
-                            label='Status'
-                            required
-                            fullWidth
-                            component={TextField}
-                            sx={{ mt: 2 }}
-                        />
 
                         <SpaceBetweenBox mt={2}>
                             <Button

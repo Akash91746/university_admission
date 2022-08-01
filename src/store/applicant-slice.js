@@ -20,23 +20,73 @@ const applicantSlice = createSlice({
             const index = deleteIndex.payload;
             state.applicants.splice(index, 1);
         }
+    },
+    extraReducers(reducers) {
+        reducers.addCase(addApplicant.fulfilled, ({ applicants }, action) => {
+            const result = action.payload;
+            if (result.isSuccess) {
+                applicants.push(result);
+            }
+        });
+        reducers.addCase(getApplicantsByStatus.fulfilled, (state, action) => {
+            const result = action.payload;
+            if (result.isSuccess) {
+                console.log(result.value);
+                state.applicants = result.value;
+            }
+        });
+        reducers.addCase(updateApplicant.fulfilled, ({ applicants }, action) => {
+            const { result, index } = action.payload;
+            if (result.isSuccess) {
+                const data = result.value;
+                applicants[index] = data;
+            }
+        });
+        reducers.addCase(deleteApplicant.fulfilled, ({ applicants }, action) => {
+            const { result, index } = action.payload;
+            if (result.isSuccess) {
+                applicants.splice(index, 1);
+            }
+        });
     }
 });
 
 const repo = new Repository();
 
-export const initializeApplicants = createAsyncThunk(
+export const getApplicantsByStatus = createAsyncThunk(
     '/initializeApplicants',
-    async () => {
-
+    async (status) => {
+        const result = await repo.getApplicantByStatus(status);
+        return result;
     }
 );
 
 export const addApplicant = createAsyncThunk(
     '/addApplicant',
     async (applicant) => {
-        const result = repo.addApplicant(applicant);
-        return result;
+        const result = await repo.addApplicant(applicant);
+        console.log(result);
+        return true;
+    }
+);
+
+export const updateApplicant = createAsyncThunk(
+    '/updateApplicant',
+    async ({ applicant, index }) => {
+        const result = await repo.updateApplicant(applicant);
+        return {
+            result, index
+        }
+    }
+);
+
+export const deleteApplicant = createAsyncThunk(
+    '/deleteApplicant',
+    async ({ applicant, index }) => {
+        const result = await repo.deleteApplicant(applicant);
+        return {
+            result, index
+        }
     }
 )
 

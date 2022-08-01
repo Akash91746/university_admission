@@ -3,7 +3,7 @@ import { UiActions } from '../store/ui-slice';
 
 function useSnackbar() {
 
-    const snackbarState = useSelector(store => store.ui.snackbar);
+    const snackbarState = useSelector(store => store.ui);
 
     const dispatch = useDispatch();
 

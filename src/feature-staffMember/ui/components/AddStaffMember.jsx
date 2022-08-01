@@ -9,6 +9,7 @@ import { addStaffMember, updateStaffMember } from "../../../store/staffMembers-s
 import formValidation from "../../domain/utils/formValidation";
 
 const initialValues = {
+    confirmPassword: '',
     password: '',
     role: ''
 }
@@ -45,7 +46,8 @@ const AddStaffMember = ({ onClickCancel, editItem }) => {
             initialValues={
                 editItem ? {
                     role: editItem.value.role,
-                    password: ''
+                    password: '',
+                    confirmPassword: ''
                 } :
                     initialValues
             }
@@ -75,6 +77,16 @@ const AddStaffMember = ({ onClickCancel, editItem }) => {
                             <Field
                                 name='password'
                                 label='Password'
+                                type='password'
+                                component={TextField}
+                                required
+                                fullWidth
+                                sx={{ mt: 2 }}
+                            />
+
+                            <Field
+                                name='confirmPassword'
+                                label='Confirm Password'
                                 type='password'
                                 component={TextField}
                                 required

@@ -56,6 +56,15 @@ export const loginUser = createAsyncThunk(
             }
         }
 
+        if (result.isSuccess) {
+            const value = result.value;
+            if (value !== 'Login Validated..') {
+                result.isSuccess = false;
+            }
+        }else{
+            result.value = result.errorMessage;
+        }
+
         return {
             result,
             loginMode

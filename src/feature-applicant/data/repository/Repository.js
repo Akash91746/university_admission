@@ -10,33 +10,61 @@ class Repository {
         this._dataSource = new DataSource();
     }
 
-    addApplicant(value) {
-        return this._dataSource.add(BASE_URL, {
-            applicantName: value.applicantName,
-            mobileNumber: value.mobileNumber,
-            applicantDegree: value.applicantDegree,
-            applicantGraduationPercent: value.percent,
-            status: value.status,
+    addApplicant(applicant) {
+
+        const applicantId = parseInt(applicant.applicantId);
+        const courseId = parseInt(applicant.courseId);
+        const percent = parseInt(applicant.applicantGraduationPercent);
+
+        const data = {
             admission: {
-                courseId: value.courseId,
-                admissionDate: value.admissionDate.toISOString(),
-                status: value.status
-            }
-        });
+                admissionDate: applicant.admissionDate.toISOString(),
+                applicantId: applicantId,
+                courseId: courseId,
+                status: applicant.admissionStatus
+            },
+            applicantDegree: applicant.applicantDegree,
+            applicantGraduationPercent: percent,
+            applicantName: applicant.applicantName,
+            mobileNumber: applicant.mobileNumber,
+            password: applicant.password,
+            status: applicant.status
+        };
+
+        return this._dataSource.add(BASE_URL, data);
     }
 
-    deleteApplicant(applicantId) {
-        const url = `${BASE_URL}/${applicantId}`;
-
-        return this._dataSource.delete(url);
+    deleteApplicant(applicant) {
+        return this._dataSource.delete(BASE_URL, applicant);
     }
 
-    getAllApplicant() {
-        return this._dataSource.get(BASE_URL);
+    getApplicantByStatus(status) {
+        const url = `${BASE_URL}/viewAllApplicantsByStatus/${status}`
+        return this._dataSource.get(url);
     }
 
     updateApplicant(applicant) {
-        return this._dataSource.update(BASE_URL, applicant);
+        const applicantId = parseInt(applicant.applicantId);
+        const courseId = parseInt(applicant.courseId);
+        const percent = parseInt(applicant.applicantGraduationPercent);
+
+        const data = {
+            admission: {
+                admissionDate: applicant.admissionDate.toISOString(),
+                applicantId: applicantId,
+                courseId: courseId,
+                status: applicant.admissionStatus
+            },
+            applicantDegree: applicant.applicantDegree,
+            applicantGraduationPercent: percent,
+            applicantName: applicant.applicantName,
+            mobileNumber: applicant.mobileNumber,
+            password: applicant.password,
+            status: applicant.status,
+            applicantId: applicantId
+        };
+
+        return this._dataSource.update(BASE_URL, data);
     }
 }
 
