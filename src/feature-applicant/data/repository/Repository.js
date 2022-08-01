@@ -31,6 +31,7 @@ class Repository {
             status: applicant.status
         };
 
+        console.log(data);
         return this._dataSource.add(BASE_URL, data);
     }
 

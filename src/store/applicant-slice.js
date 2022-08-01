@@ -25,13 +25,12 @@ const applicantSlice = createSlice({
         reducers.addCase(addApplicant.fulfilled, ({ applicants }, action) => {
             const result = action.payload;
             if (result.isSuccess) {
-                applicants.push(result);
+                applicants.push(result.value);
             }
         });
         reducers.addCase(getApplicantsByStatus.fulfilled, (state, action) => {
             const result = action.payload;
             if (result.isSuccess) {
-                console.log(result.value);
                 state.applicants = result.value;
             }
         });
@@ -65,8 +64,7 @@ export const addApplicant = createAsyncThunk(
     '/addApplicant',
     async (applicant) => {
         const result = await repo.addApplicant(applicant);
-        console.log(result);
-        return true;
+        return result;
     }
 );
 
